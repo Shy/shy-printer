@@ -3,11 +3,10 @@ from Adafruit_Thermal import *
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 
 with open('assets/sentai.txt', 'r') as f:
-    text = f.readlines()
+    text = f.read()
 f.closed
 
-for line in text:
-    printer.println(line)
+printer.println(text)
 
 printer.sleep()      # Tell printer to sleep
 printer.wake()       # Call wake() before printing again, even if reset
