@@ -1,13 +1,15 @@
 from Adafruit_Thermal import *
 
+import Image
+
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 
-with open('assets/sentai.txt', 'r') as f:
-    text = f.readlines()
-f.closed
+im = Image.open("assets/GOODMORNING.png")
+im = im.rotate(90)
 
-for line in text:
-    printer.println(line)
+printer.printImage(im)
+
+im.save('assets/GOODMORNING.bmp')
 
 printer.sleep()      # Tell printer to sleep
 printer.wake()       # Call wake() before printing again, even if reset
