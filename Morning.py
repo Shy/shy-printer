@@ -7,7 +7,7 @@ printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 im = Image.open("assets/GOODMORNING.png")
 im = im.rotate(90)
 
-printer.printImage(im)
+printer.printImage(im,False)
 
 im.save('assets/GOODMORNING.bmp')
 
