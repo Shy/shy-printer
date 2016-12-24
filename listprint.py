@@ -6,17 +6,7 @@ with open('assets/kamenrider.txt', 'r') as f:
     text = f.read()
 f.closed
 
-printer.inverseOn()
 printer.println(text)
-printer.inverseOff()
-
-printer.upsideDownOn()
-printer.println(text)
-printer.upsideDownOff()
-
-printer.sidewaysOn()
-printer.println(text)
-printer.sidewaysOff()
 
 printer.sleep()      # Tell printer to sleep
 printer.wake()       # Call wake() before printing again, even if reset

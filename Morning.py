@@ -11,9 +11,11 @@ new_height = new_width * im.height / im.width
 
 im = im.resize((new_width,new_height))
 
-printer.printImage(im,True)
 
 im.save('assets/GOODMORNING.bmp')
+
+printer.printImage(im,True)
+
 
 printer.sleep()      # Tell printer to sleep
 printer.wake()       # Call wake() before printing again, even if reset
