@@ -1,8 +1,9 @@
 from Adafruit_Thermal import *
+import sys
 
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 
-with open('assets/kamenrider.txt', 'r') as f:
+with open(sys.argv[1], 'r') as f:
     text = f.read()
 f.closed
 
