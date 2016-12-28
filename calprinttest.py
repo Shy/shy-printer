@@ -74,10 +74,13 @@ def main():
     if not events:
         print('No upcoming events found.')
     for event in events:
+        printer.boldOn()
+        printer.println(event['summary'])
+        printer.boldOff()
+
         start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
         printer.println(start.format('h:mm A'))
 
-        printer.println(event['summary'])
         for attendee in event['attendees']:
             if attendee['responseStatus'] == "accepted":
                 if 'displayName' in attendee:
