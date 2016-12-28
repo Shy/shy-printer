@@ -83,12 +83,12 @@ def main():
         start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
         printer.println(start.format('dddd h:mm A'))
 
-        for attendee in event['attendees']:
-            if attendee['responseStatus'] == "accepted":
-                if 'displayName' in attendee:
-                    printer.println(attendee['displayName'])
-                elif 'email' in attendee:
-                    printer.println(attendee['email'])
+        # for attendee in event['attendees']:
+        #     if attendee['responseStatus'] == "accepted":
+        #         if 'displayName' in attendee:
+        #             printer.println(attendee['displayName'])
+        #         elif 'email' in attendee:
+        #             printer.println(attendee['email'])
 
         printer.println()
 
