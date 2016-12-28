@@ -7,10 +7,15 @@ from oauth2client import tools
 from oauth2client.file import Storage
 
 import datetime
+import arrow
+
+from Adafruit_Thermal import *
+
 
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+    printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 except ImportError:
     flags = None
 
@@ -50,28 +55,39 @@ def get_credentials():
     return credentials
 
 def main():
-    """Shows basic usage of the Google Calendar API.
-
-    Creates a Google Calendar API service object and outputs a list of the next
-    10 events on the user's calendar.
+    """
+    Creates a Google Calendar API service object and outputs a list of the events on the user's calendar that take place today.
     """
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
 
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
+    #Get dates in RFC3339 timestamp format
+    today = str(datetime.datetime.now().date()) + "T00:00:00.00Z"
+    tommorow = str(datetime.datetime.now().date()+ datetime.timedelta(days=3) ) + "T00:00:00.00Z"
+
     eventsResult = service.events().list(
-        calendarId='primary', timeMin=now, maxResults=10, singleEvents=True,
+        calendarId='primary', timeMin=today, timeMax=tommorow, singleEvents=True,
         orderBy='startTime').execute()
     events = eventsResult.get('items', [])
 
     if not events:
         print('No upcoming events found.')
     for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
+        start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
+        printer.println(start.format('h:mm A'))
 
+        printer.println(event['summary'])
+        for attendee in event['attendees']:
+            if attendee['responseStatus'] == "accepted":
+                if 'displayName' in attendee:
+                    printer.println(attendee['displayName'])
+                elif 'email' in attendee:
+                    printer.println(attendee['email'])
 
 if __name__ == '__main__':
     main()
+
+    printer.sleep()      # Tell printer to sleep
+    printer.wake()       # Call wake() before printing again, even if reset
+    printer.setDefault() # Restore printer to defaults
