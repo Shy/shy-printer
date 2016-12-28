@@ -79,7 +79,7 @@ def main():
         printer.boldOff()
 
         start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
-        printer.println(start.format('h:mm A'))
+        printer.println(start.format('dddd h:mm A'))
 
         for attendee in event['attendees']:
             if attendee['responseStatus'] == "accepted":
