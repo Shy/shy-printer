@@ -88,6 +88,8 @@ def main():
                 elif 'email' in attendee:
                     printer.println(attendee['email'])
 
+        printer.println()
+
 if __name__ == '__main__':
     main()
 
