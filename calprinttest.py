@@ -75,8 +75,10 @@ def main():
         print('No upcoming events found.')
     for event in events:
         printer.boldOn()
+        printer.underlineOn()
         printer.println(event['summary'])
         printer.boldOff()
+        printer.underlineOff()
 
         start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
         printer.println(start.format('dddd h:mm A'))
