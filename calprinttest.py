@@ -75,7 +75,7 @@ def main():
         print('No upcoming events found.')
     for event in events:
         printer.boldOn()
-        printer.underlineOn()
+        printer.underlineOn(2)
         printer.println(event['summary'])
         printer.boldOff()
         printer.underlineOff()
