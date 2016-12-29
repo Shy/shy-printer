@@ -2,7 +2,7 @@ from Adafruit_Thermal import *
 
 from PIL import Image
 
-printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
 im = Image.open("assets/GOODMORNING.png")
 

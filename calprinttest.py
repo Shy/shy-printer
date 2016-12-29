@@ -54,6 +54,8 @@ def get_credentials():
     return credentials
 
 def main():
+    printer.println()
+
     """
     Creates a Google Calendar API service object and outputs a list of the events on the user's calendar that take place today.
     """
@@ -109,6 +111,7 @@ def main():
 if __name__ == '__main__':
     main()
 
+    printer.println()
     printer.sleep()      # Tell printer to sleep
     printer.wake()       # Call wake() before printing again, even if reset
     printer.setDefault() # Restore printer to defaults
