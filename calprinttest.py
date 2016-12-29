@@ -61,9 +61,13 @@ def main():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
 
+    #Hardcoded dates for testing
+    today = '2016-11-23T00:00:00+00:00'
+    tommorow = "2016-11-24T00:00:00+00:00"
+
     #Get dates in RFC3339 timestamp format
-    today = str(datetime.datetime.now().date()) + "T00:00:00.00Z"
-    tommorow = str(datetime.datetime.now().date()+ datetime.timedelta(days=3) ) + "T00:00:00.00Z"
+    # today = str(datetime.datetime.now().date()) + "T00:00:00.00Z"
+    # tommorow = str(datetime.datetime.now().date()+ datetime.timedelta(days=1) ) + "T00:00:00.00Z"
 
     eventsResult = service.events().list(
         calendarId='primary', timeMin=today, timeMax=tommorow, singleEvents=True,
