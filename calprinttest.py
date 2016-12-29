@@ -71,8 +71,12 @@ def main():
         orderBy='startTime').execute()
     events = eventsResult.get('items', [])
 
+    printer.doubleHeightOn()
+    printer.println(arrow.utcnow().format('dddd, MMMM DD, YYYY'))
+    printer.doubleHeightOff()
+
     if not events:
-        print('No upcoming events found.')
+        print('No events today.')
     for event in events:
         printer.boldOn()
         printer.underlineOn(2)
@@ -81,7 +85,7 @@ def main():
         printer.underlineOff()
 
         start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
-        printer.println(start.format('dddd h:mm A'))
+        printer.println(start.format('h:mm A'))
 
         # for attendee in event['attendees']:
         #     if attendee['responseStatus'] == "accepted":
