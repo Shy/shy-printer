@@ -6,8 +6,11 @@ printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
 im = Image.open("assets/GOODMORNING.png")
 
+width, height = im.size
+
+
 new_width  = 384
-new_height = new_width * im.height / im.width
+new_height = new_width * height / width
 
 im = im.resize((new_width,new_height))
 
