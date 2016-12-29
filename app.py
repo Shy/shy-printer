@@ -1,4 +1,5 @@
 from Adafruit_Thermal import *
+
 from flask import Flask, request
 from twilio import twiml
 
