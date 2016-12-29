@@ -81,9 +81,13 @@ def main():
     if not events:
         print('No events today.')
     for event in events:
+        event_name = event['summary']
+        if " <> Shy" in event_name:
+            event_name = event_name[:event_name.index(" <> Shy")]
+
         printer.boldOn()
         printer.underlineOn(2)
-        printer.println(event['summary'])
+        printer.println(event_name)
         printer.boldOff()
         printer.underlineOff()
 
