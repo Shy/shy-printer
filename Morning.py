@@ -1,10 +1,11 @@
 from Adafruit_Thermal import *
+import sys
 
 from PIL import Image
 
 printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
-im = Image.open("assets/GOODMORNING.png")
+im = Image.open(sys.argv[1])
 
 width, height = im.size
 
