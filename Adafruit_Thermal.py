@@ -36,7 +36,6 @@
 from __future__ import print_function
 from serial import Serial
 import time
-import math
 
 class Adafruit_Thermal(Serial):
 
@@ -168,19 +167,19 @@ class Adafruit_Thermal(Serial):
 
 	# 'Raw' byte-writing method
 	def writeBytes(self, *args):
+		self.timeoutWait()
+		self.timeoutSet(len(args) * self.byteTime)
 		for arg in args:
-			self.timeoutWait()
-			self.timeoutSet(self.byteTime)
-			super(Adafruit_Thermal, self).write(bytes([arg]))
+			super(Adafruit_Thermal, self).write(chr(arg))
 
 
 	# Override write() method to keep track of paper feed.
 	def write(self, *data):
-		for i in range(len(data[0])):
-			c = data[0][i]
-			if ord(c) != 0x13:
+		for i in range(len(data)):
+			c = data[i]
+			if c != 0x13:
 				self.timeoutWait()
-				super(Adafruit_Thermal, self).write(c.encode('cp437','ignore'))
+				super(Adafruit_Thermal, self).write(c)
 				d = self.byteTime
 				if ((c == '\n') or
 				    (self.column == self.maxColumn)):
@@ -268,7 +267,7 @@ class Adafruit_Thermal(Serial):
 		# Print string
 		self.timeoutWait()
 		self.timeoutSet((self.barcodeHeight + 40) * self.dotPrintTime)
-		super(Adafruit_Thermal, self).write(text.encode('utf-8', 'ignore'))
+		super(Adafruit_Thermal, self).write(text)
 		self.prevByte = '\n'
 		self.feed(2)
 
@@ -418,7 +417,7 @@ class Adafruit_Thermal(Serial):
 
 
 	def printBitmap(self, w, h, bitmap, LaaT=False):
-		rowBytes = math.floor((w + 7) / 8)  # Round up to next byte boundary
+		rowBytes = (w + 7) / 8  # Round up to next byte boundary
 		if rowBytes >= 48:
 			rowBytesClipped = 48  # 384 pixels max width
 		else:
@@ -445,7 +444,7 @@ class Adafruit_Thermal(Serial):
 			for y in range(chunkHeight):
 				for x in range(rowBytesClipped):
 					super(Adafruit_Thermal, self).write(
-					  bytes([bitmap[i]]))
+					  chr(bitmap[i]))
 					i += 1
 				i += rowBytes - rowBytesClipped
 			self.timeoutSet(chunkHeight * self.dotPrintTime)
@@ -571,3 +570,4 @@ class Adafruit_Thermal(Serial):
 		for arg in args:
 			self.write(str(arg))
 		self.write('\n')
+
