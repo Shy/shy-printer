@@ -94,7 +94,8 @@ def main():
         printer.underlineOff()
 
         start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
-        printer.println(start.format('h:mm A'))
+        end = arrow.get(event['end'].get('dateTime', event['end'].get('date')))
+        printer.println('{} - {}'.format(start.format('h:mm A'),end.format('h:mm A'))
 
         # for attendee in event['attendees']:
         #     if attendee['responseStatus'] == "accepted":
