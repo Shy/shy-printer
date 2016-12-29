@@ -11,11 +11,10 @@ import arrow
 
 from Adafruit_Thermal import *
 
-
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-    printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
+    printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 except ImportError:
     flags = None
 
