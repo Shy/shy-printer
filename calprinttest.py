@@ -81,8 +81,10 @@ def main():
     if not events:
         print('No events today.')
     for event in events:
+
+        #Truncate out details that I'm attending the meeting to save width.
         event_name = event['summary']
-        if " <> Shy" in event_name:
+        if " <> Shy (Major League Hacking)" in event_name:
             event_name = event_name[:event_name.index(" <> Shy")]
 
         printer.boldOn()
