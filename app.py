@@ -18,8 +18,10 @@ def sms():
 
     printer.boldOn()
     printer.underlineOn(2)
-    printer.print(number)
-    printer.setDefault()
+    printer.println(number)
+    printer.boldOff()
+    printer.underlineOff()
+
     printer.println(message_body)
 
     return str(resp)
