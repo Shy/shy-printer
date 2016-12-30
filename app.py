@@ -12,10 +12,10 @@ app = Flask(__name__)
 @app.route('/sms', methods=['POST'])
 def sms():
     number = request.form['From']
-    message_body = request.form['Body']
+    message_body = textwrap.wrap(request.form['Body'],32)
 
     resp = twiml.Response()
-    resp.message('Printing: {}'.format(textwrap.wrap(message_body,32)))
+    resp.message('Printing: {}'.format(message_body))
 
     printer.boldOn()
     printer.underlineOn(2)
