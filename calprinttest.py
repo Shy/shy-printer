@@ -1,5 +1,6 @@
 import httplib2
 import os
+import textwrap
 
 from apiclient import discovery
 from oauth2client import client
@@ -88,10 +89,14 @@ def main():
         event_name = event['summary']
         if " <> Shy (Major League Hacking)" in event_name:
             event_name = event_name[:event_name.index(" <> Shy")]
+        event_name = textwrap.wrap(event_name,32)
 
         printer.boldOn()
         printer.underlineOn(2)
-        printer.println(event_name)
+
+        for line in event_name:
+            printer.println(line)
+
         printer.boldOff()
         printer.underlineOff()
 
