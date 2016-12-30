@@ -1,3 +1,5 @@
+import time, schedule
+
 import httplib2
 import os
 import textwrap
@@ -54,7 +56,7 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def main():
+def printcal():
     printer.println()
 
     """
@@ -112,6 +114,12 @@ def main():
         #             printer.println(attendee['email'])
 
         printer.println()
+
+def main():
+    schedule.every().day.at("19:41").do(printcal)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 if __name__ == '__main__':
     main()
