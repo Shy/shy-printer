@@ -67,12 +67,12 @@ def printcal():
     service = discovery.build('calendar', 'v3', http=http)
 
     #Hardcoded dates for testing
-    today = '2016-11-23T00:00:00+00:00'
-    tommorow = "2016-11-24T00:00:00+00:00"
+    # today = '2016-11-23T00:00:00+00:00'
+    # tommorow = "2016-11-24T00:00:00+00:00"
 
     #Get dates in RFC3339 timestamp format
-    # today = str(datetime.datetime.now().date()) + "T00:00:00.00Z"
-    # tommorow = str(datetime.datetime.now().date()+ datetime.timedelta(days=1) ) + "T00:00:00.00Z"
+    today = str(datetime.datetime.now().date()) + "T00:00:00.00Z"
+    tommorow = str(datetime.datetime.now().date()+ datetime.timedelta(days=1) ) + "T00:00:00.00Z"
 
     eventsResult = service.events().list(
         calendarId='primary', timeMin=today, timeMax=tommorow, singleEvents=True,
@@ -116,7 +116,12 @@ def printcal():
         printer.println()
 
 def main():
-    schedule.every().day.at("19:41").do(printcal)
+    schedule.every().monday.at("10:00").do(printcal)
+    schedule.every().tuesday.at("10:00").do(printcal)
+    schedule.every().wednesday.at("10:00").do(printcal)
+    schedule.every().thursday.at("10:00").do(printcal)
+    schedule.every().friday.at("10:00").do(printcal)
+
     while True:
         schedule.run_pending()
         time.sleep(1)
