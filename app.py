@@ -24,7 +24,7 @@ def sms():
     printer.underlineOff()
 
     for line in message_body:
-        printer.print(line + "\n")
+        printer.println(line)
 
     return str(resp)
 
