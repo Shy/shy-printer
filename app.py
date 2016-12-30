@@ -2,6 +2,7 @@ from Adafruit_Thermal import *
 
 from flask import Flask, request
 from twilio import twiml
+import textwrap
 
 printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
@@ -14,7 +15,7 @@ def sms():
     message_body = request.form['Body']
 
     resp = twiml.Response()
-    resp.message('Printing: {}'.format(message_body))
+    resp.message('Printing: {}'.format(textwrap.wrap(message_body,32)))
 
     printer.boldOn()
     printer.underlineOn(2)
