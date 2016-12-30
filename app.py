@@ -23,9 +23,11 @@ def sms():
     printer.boldOff()
     printer.underlineOff()
 
-    printer.println(message_body)
+    for line in message_body:
+        printer.print(line + "\n")
 
     return str(resp)
 
 if __name__ == '__main__':
     app.run()
+
