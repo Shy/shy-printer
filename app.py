@@ -25,7 +25,7 @@ def sms():
 
     for line in message_body:
         printer.println(line)
-    printer.println()
+    printer.println("\n")
 
     return str(resp)
 
