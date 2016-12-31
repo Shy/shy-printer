@@ -9,6 +9,12 @@ import re
 
 printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
+with open('assets/contacts.csv') as csvfile:
+     reader = csv.DictReader(csvfile)
+     for line in reader:
+            print line
+            contact_list.append(line)
+
 app = Flask(__name__)
 
 
@@ -41,5 +47,5 @@ def sms():
     return str(resp)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
