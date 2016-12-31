@@ -2,7 +2,10 @@ from Adafruit_Thermal import *
 
 from flask import Flask, request
 from twilio import twiml
+
 import textwrap
+import csv
+import re
 
 printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
@@ -11,7 +14,15 @@ app = Flask(__name__)
 
 @app.route('/sms', methods=['POST'])
 def sms():
-    number = request.form['From']
+
+    number = re.sub("\D", "", request.form['From'])
+    for item in contact_list:
+        if item['Phone'] == number:
+            sender = '{} {}'.format(item['First'],item['Last'])
+            break
+    else:
+        sender = number
+
     message_body = textwrap.wrap(request.form['Body'],32)
 
     resp = twiml.Response()
@@ -19,7 +30,7 @@ def sms():
 
     printer.boldOn()
     printer.underlineOn(2)
-    printer.println(number)
+    printer.println(sender)
     printer.boldOff()
     printer.underlineOff()
 
