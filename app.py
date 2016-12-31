@@ -9,17 +9,16 @@ import re
 
 printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
-with open('assets/contacts.csv') as csvfile:
-     reader = csv.DictReader(csvfile)
-     for line in reader:
-            print line
-            contact_list.append(line)
-
 app = Flask(__name__)
 
 
 @app.route('/sms', methods=['POST'])
 def sms():
+    with open('assets/contacts.csv') as csvfile:
+     reader = csv.DictReader(csvfile)
+     for line in reader:
+            print line
+            contact_list.append(line)
 
     number = re.sub("\D", "", request.form['From'])
     for item in contact_list:
