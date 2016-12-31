@@ -36,7 +36,7 @@ pip-delete-this-directory.txt
 
 #secrets
 client_secret.json
-contacts.csv
+assets/contacts.csv
 
 # Unit test / coverage reports
 htmlcov/
