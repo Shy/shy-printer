@@ -15,8 +15,10 @@ app = Flask(__name__)
 @app.route('/sms', methods=['POST'])
 def sms():
     with open('assets/contacts.csv') as csvfile:
-     reader = csv.DictReader(csvfile)
-     for line in reader:
+        reader = csv.DictReader(csvfile)
+    contact_list = []
+
+    for line in reader:
             print line
             contact_list.append(line)
 
