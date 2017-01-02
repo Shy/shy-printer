@@ -116,6 +116,8 @@ def printcal():
         printer.println()
 
 def main():
+    printcal()
+
     schedule.every().monday.at("10:00").do(printcal)
     schedule.every().tuesday.at("10:00").do(printcal)
     schedule.every().wednesday.at("10:00").do(printcal)
