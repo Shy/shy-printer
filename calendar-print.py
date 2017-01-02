@@ -112,9 +112,7 @@ def printcal():
         #             printer.println(attendee['displayName'])
         #         elif 'email' in attendee:
         #             printer.println(attendee['email'])
-
-        printer.println()
-        printer.println()
+    printer.println()
 
 def main():
     printcal()
