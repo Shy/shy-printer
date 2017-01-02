@@ -6,6 +6,7 @@ from twilio import twiml
 import textwrap
 import csv
 import re
+import arrow
 
 printer = Adafruit_Thermal("/dev/ttyS0", 19200, timeout=5)
 
@@ -30,12 +31,9 @@ def sms():
 
     message_body = textwrap.wrap(request.form['Body'],32)
 
-    resp = twiml.Response()
-    resp.message('Printing: {}'.format(message_body))
-
     printer.boldOn()
     printer.underlineOn(2)
-    printer.println(sender)
+    printer.println("{} {}".format(sender,arrow.now().format('M/D/YY h:mm A'))
     printer.boldOff()
     printer.underlineOff()
 
@@ -43,6 +41,8 @@ def sms():
         printer.println(line)
     printer.println("\n")
 
+    resp = twiml.Response()
+    resp.message('From {} Printing: {}'.format(sender,message_body))
     return str(resp)
 
 if __name__ == '__main__':
