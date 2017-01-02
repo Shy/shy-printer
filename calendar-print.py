@@ -84,7 +84,7 @@ def printcal():
     printer.doubleHeightOff()
 
     if not events:
-        print('No events today.')
+        printer.println('No events today.')
     for event in events:
 
         #Truncate out details that I'm attending the meeting to save width.
