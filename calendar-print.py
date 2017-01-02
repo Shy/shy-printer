@@ -114,6 +114,7 @@ def printcal():
         #             printer.println(attendee['email'])
 
         printer.println()
+        printer.println()
 
 def main():
     printcal()
