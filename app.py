@@ -28,12 +28,13 @@ def sms():
             break
     else:
         sender = number
+    timestamp = arrow.now().format('M/D/YY h:mm A')
 
     message_body = textwrap.wrap(request.form['Body'],32)
 
     printer.boldOn()
     printer.underlineOn(2)
-    printer.println("{} {}".format(sender,arrow.now().format('M/D/YY h:mm A'))
+    printer.println("{} - {}".format(sender,timestamp))
     printer.boldOff()
     printer.underlineOff()
 
