@@ -34,7 +34,7 @@ def sms():
 
     printer.boldOn()
     printer.underlineOn(2)
-    printer.println("{} - {}".format(sender,timestamp))
+    printer.println("{}-{}".format(sender,timestamp))
     printer.boldOff()
     printer.underlineOff()
 
