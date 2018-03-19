@@ -9,6 +9,8 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 
+from operator import itemgetter
+
 import datetime
 import arrow
 
@@ -89,21 +91,19 @@ def printcal():
         orderBy='startTime').execute()
     events += eventsResult.get('items', [])
 
-
-
-
     printer.doubleHeightOn()
     printer.println(arrow.utcnow().format('dddd, MMMM DD, YYYY'))
     printer.doubleHeightOff()
 
     if not events:
         printer.println('No events today.')
-    for event in events:
+        sorted_events = events
+    else:
+        sorted_events = sorted(events, key=itemgetter('start'))
+    for event in sorted_events:
 
         #Truncate out details that I'm attending the meeting to save width.
         event_name = event['summary']
-        if " <> Shy (Major League Hacking)" in event_name:
-            event_name = event_name[:event_name.index(" <> Shy")]
         event_name = textwrap.wrap(event_name,32)
 
         printer.boldOn()
