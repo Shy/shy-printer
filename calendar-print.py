@@ -1,4 +1,5 @@
-import time, schedule
+import time
+import schedule
 
 import httplib2
 import os
@@ -53,10 +54,11 @@ def get_credentials():
         flow.user_agent = APPLICATION_NAME
         if flags:
             credentials = tools.run_flow(flow, store, flags)
-        else: # Needed only for compatibility with Python 2.6
+        else:  # Needed only for compatibility with Python 2.6
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     return credentials
+
 
 def printcal():
     printer.println()
@@ -68,27 +70,27 @@ def printcal():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
 
-    #Hardcoded dates for testing
+    # Hardcoded dates for testing
     # today = '2016-11-23T00:00:00+00:00'
     # tommorow = "2016-11-24T00:00:00+00:00"
 
-    #Get dates in RFC3339 timestamp format
-    today = str(datetime.datetime.now().date()) + "T00:00:00.00Z"
-    tommorow = str(datetime.datetime.now().date()+ datetime.timedelta(days=1) ) + "T00:00:00.00Z"
+    # Get dates in RFC3339 timestamp format
+    today = str(datetime.datetime.now().date()) + "T00:00:00.00-04:00"
+    tommorow = str(datetime.datetime.now().date() +
+                   datetime.timedelta(days=1)) + "T00:00:00.00-04:00"
 
     eventsResult = service.events().list(
         calendarId='primary', timeMin=today, timeMax=tommorow, singleEvents=True,
-        orderBy='startTime').execute()
+        orderBy='startTime', timeZone="America/New_York").execute()
     events = eventsResult.get('items', [])
 
     eventsResult = service.events().list(
-        calendarId='shyamalruparel1991@gmail.com', timeMin=today, timeMax=tommorow, singleEvents=True,
-        orderBy='startTime').execute()
+        calendarId='shyamalruparel1991@gmail.com', timeMin=today, timeMax=tommorow, singleEvents=True, timeZone="America/New_York", orderBy='startTime').execute()
     events += eventsResult.get('items', [])
 
     eventsResult = service.events().list(
         calendarId='fq49ssdrvn5pdhjmpako0v5i7a4dktmc@import.calendar.google.com', timeMin=today, timeMax=tommorow, singleEvents=True,
-        orderBy='startTime').execute()
+        orderBy='startTime', timeZone="America/New_York").execute()
     events += eventsResult.get('items', [])
 
     printer.doubleHeightOn()
@@ -102,9 +104,9 @@ def printcal():
         sorted_events = sorted(events, key=itemgetter('start'))
     for event in sorted_events:
 
-        #Truncate out details that I'm attending the meeting to save width.
+        # Truncate out details that I'm attending the meeting to save width.
         event_name = event['summary']
-        event_name = textwrap.wrap(event_name,32)
+        event_name = textwrap.wrap(event_name, 32)
 
         printer.boldOn()
         printer.underlineOn(2)
@@ -117,7 +119,7 @@ def printcal():
 
         start = arrow.get(event['start'].get('dateTime', event['start'].get('date')))
         end = arrow.get(event['end'].get('dateTime', event['end'].get('date')))
-        printer.println('{} - {}\n'.format(start.format('h:mm A'),end.format('h:mm A')))
+        printer.println('{} - {}\n'.format(start.format('h:mm A'), end.format('h:mm A')))
 
         # for attendee in event['attendees']:
         #     if attendee['responseStatus'] == "accepted":
@@ -126,6 +128,7 @@ def printcal():
         #         elif 'email' in attendee:
         #             printer.println(attendee['email'])
     printer.println("\n")
+
 
 def main():
     printcal()
@@ -140,10 +143,11 @@ def main():
         schedule.run_pending()
         time.sleep(1)
 
+
 if __name__ == '__main__':
     main()
 
     printer.println()
     printer.sleep()      # Tell printer to sleep
     printer.wake()       # Call wake() before printing again, even if reset
-    printer.setDefault() # Restore printer to defaults
+    printer.setDefault()  # Restore printer to defaults
