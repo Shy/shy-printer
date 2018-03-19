@@ -82,12 +82,12 @@ def printcal():
     eventsResult = service.events().list(
         calendarId='shyamalruparel1991@gmail.com', timeMin=today, timeMax=tommorow, singleEvents=True,
         orderBy='startTime').execute()
-    events.append(eventsResult.get('items', []))
+    events += eventsResult.get('items', [])
 
     eventsResult = service.events().list(
         calendarId='fq49ssdrvn5pdhjmpako0v5i7a4dktmc@import.calendar.google.com', timeMin=today, timeMax=tommorow, singleEvents=True,
         orderBy='startTime').execute()
-    events.append(eventsResult.get('items', []))
+    events += eventsResult.get('items', [])
 
 
 
