@@ -10,10 +10,10 @@ pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pyserial==3.4
 python-dateutil==2.7.0
-PyYAML==3.12
+PyYAML==5.1.2
 rsa==3.4.2
 schedule==0.5.0
 serial==0.0.51
 six==1.11.0
 uritemplate==3.0.0
-urllib3==1.22
+urllib3==1.25.5
