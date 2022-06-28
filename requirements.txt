@@ -1,5 +1,5 @@
 apiclient==1.0.3
-arrow==0.12.1
+arrow==0.15.1
 backports.functools-lru-cache==1.5
 future==0.16.0
 google-api-python-client==1.6.5
